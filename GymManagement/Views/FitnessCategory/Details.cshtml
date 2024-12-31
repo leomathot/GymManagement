@@ -1,0 +1,56 @@
+﻿@model GymManagement.Models.FitnessCategory
+
+<partial name="_ViewHeading" />
+
+<div>
+    
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2 col-md-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class="col-sm-10 col-md-4">
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+        <dt class="col-sm-2 col-md-2">
+            @Html.DisplayNameFor(model => model.ExerciseCategories)
+        </dt>
+        <dd class="col-sm-10 col-md-4">
+            @{
+                int exCount = Model.ExerciseCategories.Count;
+                if (exCount > 0)
+                {
+                    string firstEx = Model.ExerciseCategories.FirstOrDefault().Exercise.Name;
+                    if (exCount > 1)
+                    {
+                        string clientList = "";//Html string of client names separated by <br /> tags
+                        var s = Model.ExerciseCategories.ToList();
+                        for (int i = 1; i < exCount; i++)//Skip the first because we have it already
+                        {
+                            clientList += s[i].Exercise.Name + " <br />";
+                        }
+                        <a class="text-dark text-decoration-none" role="button" data-bs-toggle="collapse" href="#collapseClient@(Model.ID)"
+                           aria-expanded="false" aria-controls="collapseClient@(Model.ID)">
+                            @firstEx <span class="badge bg-info">@exCount</span>
+                        </a>
+                        <div class="collapse" id="collapseClient@(Model.ID)">
+                            @Html.Raw(clientList)
+                        </div>
+                    }
+                    else
+                    {
+                        @firstEx
+                    }
+                }
+                else
+                {
+                    <span>No exercises</span>
+                }
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
+    <partial name="_BackToList" />
+</div>

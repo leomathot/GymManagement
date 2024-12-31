@@ -1,0 +1,60 @@
+﻿@model IEnumerable<GymManagement.Models.FitnessCategory>
+
+<partial name="_ViewHeading" />
+
+<p><a asp-action="Create">Create New @ViewData["ControllerFriendlyName"]</a></p>
+
+<form asp-action="InsertFromExcel" asp-controller="FitnessCategory" method="post" enctype="multipart/form-data">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group">
+				<label class="control-label custom-file-label">Upload Exercises and their Fitness Categoies from an Excel File:</label>
+				<div class="input-group mb-3">
+					<input type="file" class="form-control" name="theExcel" id="theExcel">
+				</div>
+			</div>
+
+			<div class="text-danger">@Html.Raw(TempData["BadFeedback"])</div>
+			<div class="text-primary">@Html.Raw(TempData["GoodFeedback"])</div>
+			<div class="form-group">
+				<input type="submit" value="Upload Data" class="btn btn-primary" />
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="card h-auto p-3">
+				<p class="small">
+					The <strong>"Exercise"</strong> heading should be in the <strong>first row</strong> and <strong>first column</strong>.<br />
+					The <strong>"FitnessCategory"</strong> heading should be in the <strong>first row</strong> and <strong>second column</strong>.<br />
+					The program looks for these column headings to help make sure you uploaded the correct file.<br />
+					Put all the data to upload into the <strong>first</strong> and <strong>second columns</strong> of the Excel spreadsheet starting at the <strong>second row</strong>.
+				</p>
+			</div>
+		</div>
+	</div>
+</form>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Category)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Summary)
+				</td>
+				<td>
+					<a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+					<a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+					<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

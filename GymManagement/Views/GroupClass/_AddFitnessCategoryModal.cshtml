@@ -1,0 +1,21 @@
+﻿<!-- Modal-->
+
+<div class="modal fade" id="addFitnessCategoryModal" tabindex="-1" role="dialog"
+     aria-labelledby="FitnessCategoryModalLabel" style="margin-top:20vh;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-4" id="FitnessCategoryModalLabel">Add New Fitness Category</h2>
+                <button type="button" class="btn btn-outline-danger close" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="fw-bold">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @{
+                    var fc = new GymManagement.Models.FitnessCategory();
+                    <partial name="_FitnessCategoryCreate" model="fc" />
+                }
+            </div>
+        </div>
+    </div>
+</div>

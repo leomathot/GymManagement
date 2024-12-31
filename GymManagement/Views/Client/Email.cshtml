@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Email";
+}
+
+<h1 class="fs-2">Email</h1>
+<hr />
+
+<form asp-action="Email">
+	@* <div class="text-danger">@ViewData["ErrorMessage"]</div>
+	<div class="text-primary">@ViewData["SuccessMessage"]</div> *@
+    <div class="text-danger">@Html.Raw(TempData["ErrorMessage"])</div>
+    <div class="text-primary">@Html.Raw(TempData["SuccessMessage"])</div>
+    <div class="row">
+        <div class="col-md-4">
+
+            <div class="form-group">
+                <label for="Subject" class="control-label">Email Subject</label>
+                <input type="text" id="Subject" name="Subject" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="emailContent" class="control-label">Message Content</label>
+                <textarea id="emailContent" name="emailContent" rows="6" cols="40" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="control-label">Clients Selected</label> 
+                    <button type="button" id="btnRight" class="btn btn-danger btn-sm px-3 ms-2 mb-2">
+                        <strong>-</strong>
+                    </button>
+                    @Html.ListBox("selectedOptions", (MultiSelectList)ViewBag.selOpts, new { @size = 10, @class = "form-control" })
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="control-label">Choose Clients</label> 
+                    <button type="button" id="btnLeft" class="btn btn-success btn-sm px-3 ms-2 mb-2">
+                        <strong>+</strong>
+                    </button>
+                    @Html.ListBox("availOptions", (MultiSelectList)ViewBag.availOpts, new { @size = 10, @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" id="btnSubmit" value="Send Email" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <partial name="_BackToList" />
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/multiselect.js"></script>
+}
