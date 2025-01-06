@@ -60,3 +60,7 @@ body {
 .right-bolt {
     transform: translate(-13px,0)
 }
+
+.fw-600 {
+    font-weight: 600;
+}

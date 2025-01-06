@@ -59,31 +59,30 @@ namespace GymManagement.Data
             //so we are prevented from deleting a FitnessCategory with
             //GroupClasses scheduled
             modelBuilder.Entity<FitnessCategory>()
-                .HasMany<GroupClass>(d => d.GroupClasses)
-                .WithOne(p => p.FitnessCategory)
-                .HasForeignKey(p => p.FitnessCategoryID)
+                .HasMany<GroupClass>(fc => fc.GroupClasses)
+                .WithOne(gc => gc.FitnessCategory)
+                .HasForeignKey(gc => gc.FitnessCategoryID)
                 .OnDelete(DeleteBehavior.Restrict);
 
             //Same for Instructor
             modelBuilder.Entity<Instructor>()
-                .HasMany<GroupClass>(d => d.GroupClasses)
-                .WithOne(p => p.Instructor)
-                .HasForeignKey(p => p.InstructorID)
+                .HasMany<GroupClass>(i => i.GroupClasses)
+                .WithOne(gc => gc.Instructor)
+                .HasForeignKey(gc => gc.InstructorID)
                 .OnDelete(DeleteBehavior.Restrict);
 
             //Same for ClassTime
             modelBuilder.Entity<ClassTime>()
-                .HasMany<GroupClass>(d => d.GroupClasses)
-                .WithOne(p => p.ClassTime)
-                .HasForeignKey(p => p.ClassTimeID)
+                .HasMany<GroupClass>(ct => ct.GroupClasses)
+                .WithOne(gc => gc.ClassTime)
+                .HasForeignKey(gc => gc.ClassTimeID)
                 .OnDelete(DeleteBehavior.Restrict);
-
 
             //Similar for MembershipType and Client
             modelBuilder.Entity<MembershipType>()
-                .HasMany<Client>(d => d.Clients)
-                .WithOne(p => p.MembershipType)
-                .HasForeignKey(p => p.MembershipTypeID)
+                .HasMany<Client>(m => m.Clients)
+                .WithOne(c => c.MembershipType)
+                .HasForeignKey(c => c.MembershipTypeID)
                 .OnDelete(DeleteBehavior.Restrict);
 
             //Prevent Cascade Delete from Client to Enrollment
@@ -95,9 +94,9 @@ namespace GymManagement.Data
             //Also Note: We will allow cascade delete from Client
             //to Workout
             modelBuilder.Entity<Client>()
-                .HasMany<Enrollment>(d => d.Enrollments)
-                .WithOne(p => p.Client)
-                .HasForeignKey(p => p.ClientID)
+                .HasMany<Enrollment>(c => c.Enrollments)
+                .WithOne(e => e.Client)
+                .HasForeignKey(e => e.ClientID)
                 .OnDelete(DeleteBehavior.Restrict);
 
             //3 New restrictions for Part 3A
@@ -116,26 +115,31 @@ namespace GymManagement.Data
             modelBuilder.Entity<Enrollment>()
             .HasKey(e => new { e.ClientID, e.GroupClassID });
 
-            //2 New Many to Many Intersections for Part 3A
-            modelBuilder.Entity<ExerciseCategory>()
+			//Many to Many Intersection
+			modelBuilder.Entity<ExerciseCategory>()
             .HasKey(e => new { e.FitnessCategoryID, e.ExerciseID });
-            //
-            modelBuilder.Entity<WorkoutExercise>()
+			//Many to Many Intersection
+			modelBuilder.Entity<WorkoutExercise>()
             .HasKey(e => new { e.WorkoutID, e.ExerciseID });
 
             //Add a unique index to the Instructor Email 
             modelBuilder.Entity<Instructor>()
-            .HasIndex(p => p.Email)
+            .HasIndex(i => i.Email)
             .IsUnique();
 
-            //Add a unique index to the Client MembershipNumber 
-            modelBuilder.Entity<Client>()
-            .HasIndex(p => p.MembershipNumber)
+			//Add a unique index to the Client Email 
+			modelBuilder.Entity<Client>()
+			.HasIndex(c => c.Email)
+			.IsUnique();
+
+			//Add a unique index to the Client MembershipNumber 
+			modelBuilder.Entity<Client>()
+            .HasIndex(c => c.MembershipNumber)
             .IsUnique();
 
             //Add a unique composite index to the GroupClass 
             modelBuilder.Entity<GroupClass>()
-            .HasIndex(p => new { p.InstructorID, p.DOW, p.ClassTimeID })
+            .HasIndex(gc => new { gc.InstructorID, gc.DOW, gc.ClassTimeID })
             .IsUnique();
 
             //Many to Many Intersection

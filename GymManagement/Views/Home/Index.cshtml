@@ -18,18 +18,83 @@
 	</div>
 </div>
 
-<div class="mt-5 d-flex justify-content-center align-items-center">
-	<div class="py-2">
-		<img src="~/images/blue-bolt-logo.png" alt="Gym Management Logo" style="height: 50px; width: auto;">
-	</div>
+<div class="d-flex justify-content-center align-items-center flex-wrap gap-3 mt-5 py-2">
 	@if (SignInManager.IsSignedIn(User))
 	{
-		@* <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })"> *@
-		@* 	<button type="submit" class="nav-link btn btn-link text-dark">Logout</button> *@
-		@* </form> *@
+		// determine the role of the user
+		var user = await UserManager.GetUserAsync(User);
+		var roles = await UserManager.GetRolesAsync(user);
+
+		@* <div class="px-3"> *@
+		@* 	<div>User: @user.UserName!</div> *@
+		@* 	<div>Your roles: @string.Join(", ", roles)</div> *@
+		@* </div> *@
+
+		@if (roles.Contains("Admin"))
+		{
+			<div class="d-flex px-2">
+				<img src="~/images/blue-bolt-logo.png" alt="Gym Management Logo" style="height: 50px; width: auto;">
+				<a class="nav-link text-dark" asp-area="" asp-controller="Client" asp-action="MembershipTypeSummary">Membership Type Summary</a>
+			</div>
+
+			<div class="d-flex px-2">
+				<img src="~/images/blue-bolt-logo.png" alt="Gym Management Logo" style="height: 50px; width: auto;">
+				<a class="nav-link text-dark" asp-area="" asp-controller="UserRole" asp-action="Index">Maintain User Roles</a>
+			</div>
+		}
+		else if (roles.Contains("Security"))
+		{
+			<div class="d-flex px-2">
+				<img src="~/images/blue-bolt-logo.png" alt="Gym Management Logo" style="height: 50px; width: auto;">
+				<a class="nav-link text-dark" asp-area="" asp-controller="UserRole" asp-action="Index">Maintain User Roles</a>
+			</div>
+		}
+		else if (roles.Contains("Supervisor"))
+		{
+			<div class="d-flex px-2">
+				<img src="~/images/blue-bolt-logo.png" alt="Gym Management Logo" style="height: 50px; width: auto;">
+				<a class="nav-link text-dark" asp-area="" asp-controller="GroupClass" asp-action="Index">Group Classes</a>
+			</div>
+
+			<div class="d-flex px-2">
+				<img src="~/images/blue-bolt-logo.png" alt="Gym Management Logo" style="height: 50px; width: auto;">
+				<a class="nav-link text-dark" asp-area="" asp-controller="Instructor" asp-action="Index">Instructors</a>
+			</div>
+
+			<div class="d-flex px-2">
+				<img src="~/images/blue-bolt-logo.png" alt="Gym Management Logo" style="height: 50px; width: auto;">
+				<a class="nav-link text-dark" asp-area="" asp-controller="Client" asp-action="Index">Clients</a>
+			</div>
+		}
+		else if (roles.Contains("Staff"))
+		{
+			<div class="d-flex px-2">
+				<img src="~/images/blue-bolt-logo.png" alt="Gym Management Logo" style="height: 50px; width: auto;">
+				<a class="nav-link text-dark" asp-area="" asp-controller="GroupClass" asp-action="Index">Group Classes</a>
+			</div>
+
+			<div class="d-flex px-2">
+				<img src="~/images/blue-bolt-logo.png" alt="Gym Management Logo" style="height: 50px; width: auto;">
+				<a class="nav-link text-dark" asp-area="" asp-controller="Client" asp-action="Index">Clients</a>
+			</div>
+		}
+		else if (roles.Contains("Client"))
+		{
+			<div class="d-flex px-2">
+				<img src="~/images/blue-bolt-logo.png" alt="Gym Management Logo" style="height: 50px; width: auto;">
+				<a class="nav-link text-dark" asp-area="" asp-controller="Client" asp-action="Index">View your info</a>
+			</div>
+		}
+		else if (string.Join(", ", roles) == "")
+		{
+			<p>No role assigned</p>
+		}
 	}
 	else
 	{
-		<a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+		<div class="d-flex px-2">
+			<img src="~/images/blue-bolt-logo.png" alt="Gym Management Logo" style="height: 50px; width: auto;">
+			<a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+		</div>
 	}
 </div>

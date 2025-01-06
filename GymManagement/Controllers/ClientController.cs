@@ -115,8 +115,12 @@ namespace GymManagement.Controllers
                 {
                     ModelState.AddModelError("MembershipNumber", "Unable to save changes. Remember, " +
                         "you cannot have duplicate Membership Numbers.");
-                }
-                else
+				}
+				else if (message.Contains("UNIQUE") && message.Contains("Email"))
+				{
+					ModelState.AddModelError("Email", "This email address has already been registered by a client.");
+				}
+				else
                 {
                     ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
                 }
@@ -316,8 +320,12 @@ namespace GymManagement.Controllers
                     {
                         ModelState.AddModelError("MembershipNumber", "Unable to save changes. Remember, " +
                             "you cannot have duplicate Membership Numbers.");
-                    }
-                    else
+					}
+					else if (message.Contains("UNIQUE") && message.Contains("Email"))
+					{
+						ModelState.AddModelError("Email", "This email address has already been registered by a client.");
+					}
+					else
                     {
                         ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
                     }
