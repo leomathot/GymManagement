@@ -1,27 +1,62 @@
+:root {
+    --light-gradient: linear-gradient(160deg, #e8fcff, #f8ffff, #f0fffc);
+    --light-mid-gradient: linear-gradient(160deg, #8de7f5, #d0ffff, #75e3cd);
+    --mid-gradient: linear-gradient(160deg, #1094c8, #20dbdb, #20a080);
+    --dark-gradient: linear-gradient(160deg, #005090, #009090, #007070);
+    --light-blueish-green: #ecfefe;
+}
+
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
 }
-
+/**/
 /*Added by David S*/
 .form-group {
     margin-bottom: 1rem;
+}
+
+.home-h1 {
+/*    background: var(--light-mid-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;*/
+    filter: drop-shadow(-2px 5px #000);
+}
+
+.bg-light-grad {
+    background: var(--light-gradient);
+}
+.bg-light-mid-grad {
+    background: var(--light-mid-gradient);
+}
+.bg-mid-grad {
+    background: var(--mid-gradient);
+}
+.bg-dark-grad {
+    background: var(--dark-gradient);
+}
+
+.left-bolt {
+    transform: translate(13px,5px)
+}
+
+.right-bolt {
+    transform: translate(-13px,0)
 }

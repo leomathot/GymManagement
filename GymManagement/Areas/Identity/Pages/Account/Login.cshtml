@@ -10,8 +10,17 @@
     <div class="col-md-4">
         <section>
             <form id="account" method="post">
-                <h2>Use a local account to log in.</h2>
+                @* <h2>Use a local account to log in.</h2> *@
                 <hr />
+
+                <div class="card p-3 bg-light-grad mb-3">
+                    <p>Use this email and password to test the app:</p>
+                    <ul class="list-unstyled ms-2">
+                        <li>Email: <strong>admin@outlook.com</strong></li>
+                        <li>Password: <strong>Pass#222</strong></li>
+                    </ul>
+                </div>
+
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="form-floating mb-3">
                     <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
@@ -32,7 +41,7 @@
                 <div>
                     <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
                 </div>
-                <div>
+                <div class="mt-3">
                     <p>
                         <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
                     </p>

@@ -1,9 +1,35 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+	ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center mt-5">
-    <h1 class="fs-3">Gym Management App</h1>
-    <p class="fs-5 mt-5">Leonardo Mathot</p>
-    <a href="https://gymmanagementapp.azurewebsites.net/">GymManagementApp on Azure</a>
+<div class="text-center mt-5 d-grid gap-2">
+	<div class="p-4 bg-light-mid-grad d-flex justify-content-center align-items-center" style="min-height:140px">
+		<img src="~/images/gm-logo.png" alt="Gym Management Logo" style="height: 90px; width: auto;">
+	</div>
+	<div class="p-4 bg-mid-grad d-flex justify-content-center align-items-center" style="min-height:140px">
+		<img class="left-bolt" src="~/images/black-bolt-logo.png" alt="Gym Management Logo" style="height: 90px; width: auto;">
+		<img class="right-bolt" src="~/images/white-bolt-logo.png" alt="Gym Management Logo" style="height: 90px; width: auto;">
+	</div>
+	<div class="p-4 bg-dark-grad d-flex justify-content-center align-items-center" style="min-height:140px">
+		<h1 class="home-h1 fs-2 text-white fw-normal">Gym Management</h1>
+	</div>
+</div>
+
+<div class="mt-5 d-flex justify-content-center align-items-center">
+	<div class="py-2">
+		<img src="~/images/blue-bolt-logo.png" alt="Gym Management Logo" style="height: 50px; width: auto;">
+	</div>
+	@if (SignInManager.IsSignedIn(User))
+	{
+		@* <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })"> *@
+		@* 	<button type="submit" class="nav-link btn btn-link text-dark">Logout</button> *@
+		@* </form> *@
+	}
+	else
+	{
+		<a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+	}
 </div>
